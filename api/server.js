@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 require('dotenv').config()
 const fs = require('fs')
+const path = require("path");
 
 const taskController = require('./controller/task.controller')
 
@@ -13,8 +14,11 @@ const customCss = fs.readFileSync((process.cwd()+"/swagger.css"), 'utf8');
 const app = express();
 const port = process.env.PORT || 3080;
 
+app.use(express.static(path.join(__dirname, './ui/build/')));
+app.use(bodyParser.json());
+
 // let express to use this
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, {customCss}));
+// app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, {customCss}));
 
 app.use(bodyParser.json());
 
@@ -36,9 +40,8 @@ app.delete('/api/task/:id', (req, res) => {
 });
 
 app.get('/', (req, res) => {
-    res.send(`<h1>API Works !!!</h1>`)
+    res.sendFile(path.join(__dirname, './ui/build/index.html'));
 });
-
 
 
 app.listen(port, () => {
