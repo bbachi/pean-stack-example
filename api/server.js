@@ -6,15 +6,15 @@ const path = require("path");
 
 const taskController = require('./controller/task.controller')
 
-const swaggerUi = require('swagger-ui-express');
-const swaggerDocument = require('./swagger.json');
-const customCss = fs.readFileSync((process.cwd()+"/swagger.css"), 'utf8');
+// const swaggerUi = require('swagger-ui-express');
+// const swaggerDocument = require('./swagger.json');
+// const customCss = fs.readFileSync((process.cwd()+"/swagger.css"), 'utf8');
 
 
 const app = express();
 const port = process.env.PORT || 3080;
 
-app.use(express.static(path.join(__dirname, './ui/build/')));
+app.use(express.static(path.join(__dirname, '../ui/build/')));
 app.use(bodyParser.json());
 
 // let express to use this
@@ -40,7 +40,7 @@ app.delete('/api/task/:id', (req, res) => {
 });
 
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, './ui/build/index.html'));
+    res.sendFile(path.join(__dirname, '../ui/build/index.html'));
 });
 
 
